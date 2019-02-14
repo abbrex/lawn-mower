@@ -35,12 +35,18 @@ public class App
 	 * @return
 	 */
 	private static List<String> process() {
-		LawnMowerService service = new LawnMowerService(filePath);    	
+		LawnMowerService service = new LawnMowerService(filePath); 
+		
+		// Get data from input file
 		List<String> rawData = service.setRawData();
 
+		// Set the upper right corner
 		UpperRightCorner upperRightCorner = service.setUpperRightCorner(rawData.get(0));
 
+		// Set the lawn mowers from data
 		List<LawnMower> lawnMowers = service.setLawnMowers(rawData);
-		return service.setOutPrint(lawnMowers, upperRightCorner);
+		
+		// Set the end position of all lawn mowers
+		return service.setEndPositions(lawnMowers, upperRightCorner);
 	}
 }

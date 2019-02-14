@@ -21,7 +21,7 @@ public class LawnMowerService {
 		this.filePath = filePath;
 	}
 
-	public List<String> setOutPrint(List<LawnMower> lawnMowers, 
+	public List<String> setEndPositions(List<LawnMower> lawnMowers, 
 			UpperRightCorner upperRightCorner ) {
 		List<String> outPrint = new ArrayList<>();
 		for (LawnMower lawnMower : lawnMowers) {
@@ -150,14 +150,14 @@ public class LawnMowerService {
 		Matcher mat = null;
 		try {
 			mat = checkUpperRightCorner(line);
+			UpperRightCorner upperRightCorner = new UpperRightCorner();
+			upperRightCorner.setPositionX(Integer.parseInt(mat.group(1)));
+			upperRightCorner.setPositionY(Integer.parseInt(mat.group(2)));
+			return upperRightCorner;
 		} catch (UpperRightFormatException e) {
 			e.printStackTrace();
 		} 
-		
-		UpperRightCorner upperRightCorner = new UpperRightCorner();
-		upperRightCorner.setPositionX(Integer.parseInt(mat.group(1)));
-		upperRightCorner.setPositionY(Integer.parseInt(mat.group(2)));
-		return upperRightCorner;
+		return null;
 	}
 
 	private Matcher checkUpperRightCorner(String line) throws UpperRightFormatException {

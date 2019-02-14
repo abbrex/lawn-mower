@@ -25,7 +25,6 @@ public class LawnMowerServiceTest extends TestCase {
 	@Test
 	public void testSetUpperRightCornerWithValidParameters() {
 		UpperRightCorner upperRightCorner = service.setUpperRightCorner("5 6");
-		
 		assertEquals(upperRightCorner.getPositionX(), new Integer(5));
 		assertEquals(upperRightCorner.getPositionY(), new Integer(6));
 	}
@@ -45,7 +44,7 @@ public class LawnMowerServiceTest extends TestCase {
 	}
 	
 	@Test
-	public void testSetOutPrint() {
+	public void testSetEndPositions() {
 		UpperRightCorner upperRightCorner = service.setUpperRightCorner("5 5");
 		
 		List<String> rawData = new ArrayList<>();
@@ -54,7 +53,7 @@ public class LawnMowerServiceTest extends TestCase {
 		rawData.add("LFLFLFLFF");
 		
 		List<LawnMower> lawnMowers = this.service.setLawnMowers(rawData);
-		List<String> outPrint = this.service.setOutPrint(lawnMowers, upperRightCorner);
+		List<String> outPrint = this.service.setEndPositions(lawnMowers, upperRightCorner);
 		
 		assertEquals("1 3 N", outPrint.get(0));
 	}

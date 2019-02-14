@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
-import com.cs.tech.dao.FileInputDao;
-import com.cs.tech.exceptions.UpperRightFormatException;
 import com.cs.tech.model.LawnMower;
 import com.cs.tech.model.UpperRightCorner;
 

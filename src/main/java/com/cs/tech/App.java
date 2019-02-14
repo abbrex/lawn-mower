@@ -38,12 +38,7 @@ public class App
 		LawnMowerService service = new LawnMowerService(filePath);    	
 		List<String> rawData = service.setRawData();
 
-		UpperRightCorner upperRightCorner = null;
-		try {
-			upperRightCorner = service.setUpperRightCorner(rawData.get(0));
-		} catch (UpperRightFormatException e) {
-			e.printStackTrace();
-		}
+		UpperRightCorner upperRightCorner = service.setUpperRightCorner(rawData.get(0));
 
 		List<LawnMower> lawnMowers = service.setLawnMowers(rawData);
 		return service.setOutPrint(lawnMowers, upperRightCorner);

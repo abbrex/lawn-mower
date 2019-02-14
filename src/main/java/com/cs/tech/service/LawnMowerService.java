@@ -100,7 +100,7 @@ public class LawnMowerService {
 		for (int i = 1; i <= rawData.size()-1 ; i++) {
 			if (i % 2 != 0 && lawnMower == null) {
 				lawnMower = new LawnMower();
-				checkAndSetInitialPositon(rawData.get(i), lawnMower);
+				checkAndSetInitialPosition(rawData.get(i), lawnMower);
 			} else {
 				checkAndSetItinerary(rawData.get(i), lawnMower);
 				lawnMowers.add(lawnMower);
@@ -128,10 +128,9 @@ public class LawnMowerService {
 		}
 	}
 
-	private void checkAndSetInitialPositon(String data, LawnMower lawnMower) {
+	private void checkAndSetInitialPosition(String data, LawnMower lawnMower) {
 		try {
-			checkInitialPostion(data);
-			Integer a  = Integer.parseInt(String.valueOf(data.charAt(0)));
+			checkInitialPosition(data);
 			lawnMower.setCurrentX(Integer.parseInt(String.valueOf(data.charAt(0))));
 			lawnMower.setCurrentY(Integer.parseInt(String.valueOf(data.charAt(2))));
 			lawnMower.setCurrentDirection(data.charAt(4));
@@ -140,25 +139,36 @@ public class LawnMowerService {
 		}
 	}
  
-	private void checkInitialPostion(String data) throws InitialPositionException {
+	private void checkInitialPosition(String data) throws InitialPositionException {
 		Matcher mat = Pattern.compile("\\d \\d [NEWS]").matcher(data);
 		if (!mat.matches()) {
 			throw new InitialPositionException();
 		}
 	}
 
-	public UpperRightCorner setUpperRightCorner(String line) throws UpperRightFormatException {
+	public UpperRightCorner setUpperRightCorner(String line) {
+		Matcher mat = null;
+		try {
+			mat = checkUpperRightCorner(line);
+		} catch (UpperRightFormatException e) {
+			e.printStackTrace();
+		} 
+		
+		UpperRightCorner upperRightCorner = new UpperRightCorner();
+		upperRightCorner.setPositionX(Integer.parseInt(mat.group(1)));
+		upperRightCorner.setPositionY(Integer.parseInt(mat.group(2)));
+		return upperRightCorner;
+	}
+
+	private Matcher checkUpperRightCorner(String line) throws UpperRightFormatException {
 		Matcher mat = Pattern.compile("(\\d) (\\d)").matcher(line);
 		if (mat.matches()) {
-			UpperRightCorner upperRightCorner = new UpperRightCorner();
-			upperRightCorner.setPositionX(Integer.parseInt(mat.group(1)));
-			upperRightCorner.setPositionY(Integer.parseInt(mat.group(2)));
-			return upperRightCorner;
+			return mat;
 		} else {
 			throw new UpperRightFormatException();
 		}
 	}
-
+	
 	public List<String> setRawData() {
 		FileInputDao dao = new FileInputDao(filePath);
 		return dao.getData();
